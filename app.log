@@ -1,0 +1,297 @@
+2023-11-20 20:06:31,480 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-11-20 20:06:31,480 [INFO] [33mPress CTRL+C to quit[0m
+2023-11-20 20:06:31,481 [INFO]  * Restarting with stat
+2023-11-20 20:06:31,611 [WARNING]  * Debugger is active!
+2023-11-20 20:06:31,612 [INFO]  * Debugger PIN: 235-524-063
+2023-11-20 20:06:39,812 [INFO] Starting ...
+2023-11-20 20:06:46,890 [INFO] 127.0.0.1 - - [20/Nov/2023 20:06:46] "[35m[1mGET / HTTP/1.1[0m" 500 -
+2023-11-20 20:06:50,458 [INFO] Registering broker record
+2023-11-20 20:06:50,461 [INFO] Finding record by ID: 0
+2023-11-20 20:06:55,473 [INFO] 127.0.0.1 - - [20/Nov/2023 20:06:55] "POST /api/register-broker-record HTTP/1.1" 200 -
+2023-11-20 20:06:58,658 [INFO] Creating topic record
+2023-11-20 20:06:58,659 [INFO] Finding record by ID: 0
+2023-11-20 20:07:03,669 [INFO] 127.0.0.1 - - [20/Nov/2023 20:07:03] "POST /api/topic-record HTTP/1.1" 200 -
+2023-11-20 20:07:07,933 [INFO] Creating partition record
+2023-11-20 20:07:07,933 [INFO] Finding record by ID: None
+2023-11-20 20:07:12,942 [INFO] 127.0.0.1 - - [20/Nov/2023 20:07:12] "POST /api/partition-record HTTP/1.1" 200 -
+2023-11-20 20:07:15,944 [INFO] Creating producer ID record
+2023-11-20 20:07:15,945 [INFO] Finding record by ID: None
+2023-11-20 20:07:20,953 [INFO] 127.0.0.1 - - [20/Nov/2023 20:07:20] "POST /api/producer-id-record HTTP/1.1" 200 -
+2023-11-20 20:07:25,975 [INFO] Getting all records of a specific node
+2023-11-20 20:07:25,975 [INFO] 127.0.0.1 - - [20/Nov/2023 20:07:25] "POST /api/get-records-from-nodes HTTP/1.1" 200 -
+2023-11-20 20:39:45,220 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-11-20 20:39:45,221 [INFO] [33mPress CTRL+C to quit[0m
+2023-11-20 20:39:45,222 [INFO]  * Restarting with stat
+2023-11-20 20:39:45,412 [WARNING]  * Debugger is active!
+2023-11-20 20:39:45,414 [INFO]  * Debugger PIN: 235-524-063
+2023-11-20 20:39:59,376 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-11-20 20:39:59,376 [INFO] [33mPress CTRL+C to quit[0m
+2023-11-20 20:39:59,377 [INFO]  * Restarting with stat
+2023-11-20 20:39:59,525 [WARNING]  * Debugger is active!
+2023-11-20 20:39:59,525 [INFO]  * Debugger PIN: 235-524-063
+2023-11-20 20:40:04,153 [INFO] Starting ...
+2023-11-20 20:40:11,276 [INFO] 127.0.0.1 - - [20/Nov/2023 20:40:11] "[35m[1mGET / HTTP/1.1[0m" 500 -
+2023-11-20 20:40:16,665 [INFO] Registering broker record
+2023-11-20 20:40:16,666 [INFO] Finding record by ID: 0
+2023-11-20 20:40:21,672 [INFO] 127.0.0.1 - - [20/Nov/2023 20:40:21] "POST /api/register-broker-record HTTP/1.1" 200 -
+2023-11-20 20:40:32,109 [INFO] Creating topic record
+2023-11-20 20:40:32,112 [INFO] Finding record by ID: 0
+2023-11-20 20:40:37,129 [INFO] 127.0.0.1 - - [20/Nov/2023 20:40:37] "POST /api/topic-record HTTP/1.1" 200 -
+2023-11-20 20:40:48,588 [INFO] Creating partition record
+2023-11-20 20:40:48,592 [INFO] Finding record by ID: None
+2023-11-20 20:40:53,621 [INFO] 127.0.0.1 - - [20/Nov/2023 20:40:53] "POST /api/partition-record HTTP/1.1" 200 -
+2023-11-20 20:40:59,578 [INFO] Creating producer ID record
+2023-11-20 20:40:59,579 [INFO] Finding record by ID: None
+2023-11-20 20:41:04,602 [INFO] 127.0.0.1 - - [20/Nov/2023 20:41:04] "POST /api/producer-id-record HTTP/1.1" 200 -
+2023-11-20 20:41:46,820 [INFO] Client management
+2023-11-20 20:41:46,829 [INFO] 127.0.0.1 - - [20/Nov/2023 20:41:46] "POST /api/client-mgmt HTTP/1.1" 200 -
+2023-11-20 20:42:29,785 [INFO] Broker management
+2023-11-20 20:42:29,799 [INFO] 127.0.0.1 - - [20/Nov/2023 20:42:29] "POST /api/broker-mgmt HTTP/1.1" 200 -
+2023-11-20 20:42:54,509 [INFO] Client management
+2023-11-20 20:42:54,510 [INFO] 127.0.0.1 - - [20/Nov/2023 20:42:54] "POST /api/client-mgmt HTTP/1.1" 200 -
+2023-11-20 20:50:17,754 [INFO] Client management
+2023-11-20 20:50:17,757 [INFO] 127.0.0.1 - - [20/Nov/2023 20:50:17] "POST /api/client-mgmt HTTP/1.1" 200 -
+2023-11-20 20:50:35,773 [INFO] Client management
+2023-11-20 20:50:35,777 [INFO] 127.0.0.1 - - [20/Nov/2023 20:50:35] "POST /api/client-mgmt HTTP/1.1" 200 -
+2023-11-20 20:54:25,072 [INFO]  * Detected change in '/home/amulya/BD_project/RR-Team-46-YAKt-Yet-Another-KRaft-/flask_http_server.py', reloading
+2023-11-20 20:55:09,866 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-11-20 20:55:09,867 [INFO] [33mPress CTRL+C to quit[0m
+2023-11-20 20:55:09,867 [INFO]  * Restarting with stat
+2023-11-20 20:55:10,048 [WARNING]  * Debugger is active!
+2023-11-20 20:55:10,048 [INFO]  * Debugger PIN: 235-524-063
+2023-11-20 20:55:17,343 [INFO] Starting ...
+2023-11-20 20:55:24,426 [INFO] 127.0.0.1 - - [20/Nov/2023 20:55:24] "[35m[1mGET / HTTP/1.1[0m" 500 -
+2023-11-20 20:55:26,360 [INFO] Registering broker record
+2023-11-20 20:55:26,364 [INFO] Finding record by ID: 0
+2023-11-20 20:55:31,372 [INFO] 127.0.0.1 - - [20/Nov/2023 20:55:31] "POST /api/register-broker-record HTTP/1.1" 200 -
+2023-11-20 20:55:38,860 [INFO] Creating topic record
+2023-11-20 20:55:38,862 [INFO] Finding record by ID: 0
+2023-11-20 20:55:43,868 [INFO] 127.0.0.1 - - [20/Nov/2023 20:55:43] "POST /api/topic-record HTTP/1.1" 200 -
+2023-11-20 20:55:51,340 [INFO] Creating partition record
+2023-11-20 20:55:51,353 [INFO] Finding record by ID: None
+2023-11-20 20:55:56,376 [INFO] 127.0.0.1 - - [20/Nov/2023 20:55:56] "POST /api/partition-record HTTP/1.1" 200 -
+2023-11-20 20:56:00,912 [INFO] Creating producer ID record
+2023-11-20 20:56:00,913 [INFO] Finding record by ID: None
+2023-11-20 20:56:05,923 [INFO] 127.0.0.1 - - [20/Nov/2023 20:56:05] "POST /api/producer-id-record HTTP/1.1" 200 -
+2023-11-20 20:58:00,076 [INFO] Client management
+2023-11-20 20:58:00,080 [INFO] 127.0.0.1 - - [20/Nov/2023 20:58:00] "POST /api/client-mgmt HTTP/1.1" 200 -
+2023-11-20 23:42:22,908 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-11-20 23:42:22,908 [INFO] [33mPress CTRL+C to quit[0m
+2023-11-20 23:42:22,910 [INFO]  * Restarting with stat
+2023-11-20 23:42:23,086 [WARNING]  * Debugger is active!
+2023-11-20 23:42:23,175 [INFO]  * Debugger PIN: 415-895-803
+2023-11-20 23:42:36,534 [INFO] Starting ...
+2023-11-20 23:42:43,661 [INFO] 127.0.0.1 - - [20/Nov/2023 23:42:43] "GET / HTTP/1.1" 200 -
+2023-11-20 23:47:05,772 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-11-20 23:47:05,772 [INFO] [33mPress CTRL+C to quit[0m
+2023-11-20 23:47:05,773 [INFO]  * Restarting with stat
+2023-11-20 23:47:05,927 [WARNING]  * Debugger is active!
+2023-11-20 23:47:05,928 [INFO]  * Debugger PIN: 415-895-803
+2023-11-20 23:47:08,259 [INFO] Starting ...
+2023-11-20 23:47:15,316 [INFO] 127.0.0.1 - - [20/Nov/2023 23:47:15] "GET / HTTP/1.1" 200 -
+2023-11-20 23:47:37,276 [INFO] Adding new node to the cluster
+2023-11-20 23:47:44,341 [INFO] 127.0.0.1 - - [20/Nov/2023 23:47:44] "POST /api/new_node HTTP/1.1" 200 -
+2023-11-20 23:49:20,764 [INFO]  * Detected change in '/home/amulya/BD_project/RR-Team-46-YAKt-Yet-Another-KRaft-/flask_http_server.py', reloading
+2023-11-20 23:49:28,283 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-11-20 23:49:28,283 [INFO] [33mPress CTRL+C to quit[0m
+2023-11-20 23:49:28,283 [INFO]  * Restarting with stat
+2023-11-20 23:49:28,458 [WARNING]  * Debugger is active!
+2023-11-20 23:49:28,459 [INFO]  * Debugger PIN: 415-895-803
+2023-11-20 23:49:31,416 [INFO] Starting ...
+2023-11-20 23:49:38,099 [INFO] Adding new node to the cluster
+2023-11-20 23:49:38,467 [INFO] 127.0.0.1 - - [20/Nov/2023 23:49:38] "GET / HTTP/1.1" 200 -
+2023-11-20 23:49:45,124 [INFO] 127.0.0.1 - - [20/Nov/2023 23:49:45] "POST /api/new_node HTTP/1.1" 200 -
+2023-11-20 23:50:01,335 [INFO] Adding new node to the cluster
+2023-11-20 23:50:08,421 [INFO] 127.0.0.1 - - [20/Nov/2023 23:50:08] "POST /api/new_node HTTP/1.1" 200 -
+2023-11-20 23:50:42,308 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-11-20 23:50:42,308 [INFO] [33mPress CTRL+C to quit[0m
+2023-11-20 23:50:42,309 [INFO]  * Restarting with stat
+2023-11-20 23:50:42,498 [WARNING]  * Debugger is active!
+2023-11-20 23:50:42,499 [INFO]  * Debugger PIN: 415-895-803
+2023-11-20 23:50:45,018 [INFO] Starting ...
+2023-11-20 23:50:52,118 [INFO] 127.0.0.1 - - [20/Nov/2023 23:50:52] "GET / HTTP/1.1" 200 -
+2023-11-20 23:51:05,848 [INFO] Removing node from the cluster
+2023-11-20 23:51:10,854 [INFO] 127.0.0.1 - - [20/Nov/2023 23:51:10] "POST /api/remove_node HTTP/1.1" 200 -
+2023-11-20 23:51:44,049 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-11-20 23:51:44,049 [INFO] [33mPress CTRL+C to quit[0m
+2023-11-20 23:51:44,049 [INFO]  * Restarting with stat
+2023-11-20 23:51:44,248 [WARNING]  * Debugger is active!
+2023-11-20 23:51:44,249 [INFO]  * Debugger PIN: 415-895-803
+2023-11-20 23:51:48,610 [INFO] Starting ...
+2023-11-20 23:51:55,666 [INFO] 127.0.0.1 - - [20/Nov/2023 23:51:55] "GET / HTTP/1.1" 200 -
+2023-11-20 23:52:08,422 [INFO] Registering broker record
+2023-11-20 23:52:08,427 [INFO] Finding record by ID: 0
+2023-11-20 23:52:13,432 [INFO] 127.0.0.1 - - [20/Nov/2023 23:52:13] "POST /api/register-broker-record HTTP/1.1" 200 -
+2023-11-20 23:52:18,580 [INFO] Removing node from the cluster
+2023-11-20 23:52:23,594 [INFO] 127.0.0.1 - - [20/Nov/2023 23:52:23] "POST /api/remove_node HTTP/1.1" 200 -
+2023-11-21 00:05:38,319 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-11-21 00:05:38,319 [INFO] [33mPress CTRL+C to quit[0m
+2023-11-21 00:05:38,320 [INFO]  * Restarting with stat
+2023-11-21 00:05:38,556 [WARNING]  * Debugger is active!
+2023-11-21 00:05:38,556 [INFO]  * Debugger PIN: 415-895-803
+2023-11-21 00:05:40,961 [INFO] Starting ...
+2023-11-21 00:05:48,017 [INFO] 127.0.0.1 - - [21/Nov/2023 00:05:48] "GET / HTTP/1.1" 200 -
+2023-11-21 00:05:54,948 [INFO] Registering broker record
+2023-11-21 00:05:54,959 [INFO] Finding record by ID: 1
+2023-11-21 00:05:59,967 [INFO] 127.0.0.1 - - [21/Nov/2023 00:05:59] "POST /api/register-broker-record HTTP/1.1" 200 -
+2023-11-21 00:06:07,691 [INFO] Registering broker record
+2023-11-21 00:06:07,693 [INFO] Finding record by ID: 0
+2023-11-21 00:06:12,704 [INFO] 127.0.0.1 - - [21/Nov/2023 00:06:12] "POST /api/register-broker-record HTTP/1.1" 200 -
+2023-11-21 00:07:03,124 [INFO]  * Detected change in '/home/amulya/BD_project/RR-Team-46-YAKt-Yet-Another-KRaft-/flask_http_server.py', reloading
+2023-11-21 00:07:24,010 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-11-21 00:07:24,010 [INFO] [33mPress CTRL+C to quit[0m
+2023-11-21 00:07:24,010 [INFO]  * Restarting with stat
+2023-11-21 00:07:24,185 [WARNING]  * Debugger is active!
+2023-11-21 00:07:24,186 [INFO]  * Debugger PIN: 415-895-803
+2023-11-21 00:07:26,999 [INFO] Starting ...
+2023-11-21 00:07:34,088 [INFO] 127.0.0.1 - - [21/Nov/2023 00:07:34] "GET / HTTP/1.1" 200 -
+2023-11-21 00:07:36,267 [INFO] Registering broker record
+2023-11-21 00:07:36,271 [INFO] Finding record by ID: 1
+2023-11-21 00:07:41,283 [INFO] 127.0.0.1 - - [21/Nov/2023 00:07:41] "POST /api/register-broker-record HTTP/1.1" 200 -
+2023-11-21 00:07:57,539 [INFO] Registering broker record
+2023-11-21 00:07:57,552 [INFO] Finding record by ID: 0
+2023-11-21 00:08:02,587 [INFO] 127.0.0.1 - - [21/Nov/2023 00:08:02] "POST /api/register-broker-record HTTP/1.1" 200 -
+2023-11-21 00:08:41,401 [INFO]  * Detected change in '/home/amulya/BD_project/RR-Team-46-YAKt-Yet-Another-KRaft-/flask_http_server.py', reloading
+2023-11-21 00:08:46,275 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-11-21 00:08:46,275 [INFO] [33mPress CTRL+C to quit[0m
+2023-11-21 00:08:46,276 [INFO]  * Restarting with stat
+2023-11-21 00:08:46,445 [WARNING]  * Debugger is active!
+2023-11-21 00:08:46,445 [INFO]  * Debugger PIN: 415-895-803
+2023-11-21 00:09:09,688 [INFO] Starting ...
+2023-11-21 00:09:16,754 [INFO] 127.0.0.1 - - [21/Nov/2023 00:09:16] "GET / HTTP/1.1" 200 -
+2023-11-21 00:09:24,255 [INFO] Registering broker record
+2023-11-21 00:09:24,256 [INFO] Finding record by ID: 0
+2023-11-21 00:09:29,273 [INFO] 127.0.0.1 - - [21/Nov/2023 00:09:29] "POST /api/register-broker-record HTTP/1.1" 200 -
+2023-11-21 00:09:54,600 [INFO] Registering broker record
+2023-11-21 00:09:54,600 [INFO] Finding record by ID: 0
+2023-11-21 00:09:59,611 [INFO] 127.0.0.1 - - [21/Nov/2023 00:09:59] "POST /api/register-broker-record HTTP/1.1" 200 -
+2023-11-21 00:12:58,919 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-11-21 00:12:58,919 [INFO] [33mPress CTRL+C to quit[0m
+2023-11-21 00:12:58,919 [INFO]  * Restarting with stat
+2023-11-21 00:12:59,076 [WARNING]  * Debugger is active!
+2023-11-21 00:12:59,077 [INFO]  * Debugger PIN: 415-895-803
+2023-11-21 00:13:02,177 [INFO] Starting ...
+2023-11-21 00:13:06,546 [INFO] Registering broker record
+2023-11-21 00:13:06,547 [INFO] Finding record by ID: 0
+2023-11-21 00:13:09,232 [INFO] 127.0.0.1 - - [21/Nov/2023 00:13:09] "GET / HTTP/1.1" 200 -
+2023-11-21 00:13:11,570 [INFO] 127.0.0.1 - - [21/Nov/2023 00:13:11] "POST /api/register-broker-record HTTP/1.1" 200 -
+2023-11-21 00:13:17,712 [INFO] Registering broker record
+2023-11-21 00:13:17,730 [INFO] Finding record by ID: 0
+2023-11-21 00:13:17,853 [INFO] 127.0.0.1 - - [21/Nov/2023 00:13:17] "[35m[1mPOST /api/register-broker-record HTTP/1.1[0m" 500 -
+2023-11-21 00:13:44,480 [INFO]  * Detected change in '/home/amulya/BD_project/RR-Team-46-YAKt-Yet-Another-KRaft-/flask_http_server.py', reloading
+2023-11-21 00:13:54,733 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-11-21 00:13:54,733 [INFO] [33mPress CTRL+C to quit[0m
+2023-11-21 00:13:54,733 [INFO]  * Restarting with stat
+2023-11-21 00:13:54,898 [WARNING]  * Debugger is active!
+2023-11-21 00:13:54,899 [INFO]  * Debugger PIN: 415-895-803
+2023-11-21 00:13:57,165 [INFO] Starting ...
+2023-11-21 00:13:58,883 [INFO] Registering broker record
+2023-11-21 00:13:58,884 [INFO] Finding record by ID: 0
+2023-11-21 00:14:03,089 [INFO] Registering broker record
+2023-11-21 00:14:03,095 [INFO] Finding record by ID: 0
+2023-11-21 00:14:03,188 [INFO] 127.0.0.1 - - [21/Nov/2023 00:14:03] "[35m[1mPOST /api/register-broker-record HTTP/1.1[0m" 500 -
+2023-11-21 00:14:03,900 [INFO] 127.0.0.1 - - [21/Nov/2023 00:14:03] "POST /api/register-broker-record HTTP/1.1" 200 -
+2023-11-21 00:14:04,212 [INFO] 127.0.0.1 - - [21/Nov/2023 00:14:04] "GET / HTTP/1.1" 200 -
+2023-11-21 00:14:16,311 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-11-21 00:14:16,312 [INFO] [33mPress CTRL+C to quit[0m
+2023-11-21 00:14:16,312 [INFO]  * Restarting with stat
+2023-11-21 00:14:16,462 [WARNING]  * Debugger is active!
+2023-11-21 00:14:16,463 [INFO]  * Debugger PIN: 415-895-803
+2023-11-21 00:14:23,869 [INFO] Starting ...
+2023-11-21 00:14:30,922 [INFO] 127.0.0.1 - - [21/Nov/2023 00:14:30] "GET / HTTP/1.1" 200 -
+2023-11-21 00:14:39,004 [INFO] Registering broker record
+2023-11-21 00:14:39,005 [INFO] Finding record by ID: 0
+2023-11-21 00:14:39,095 [INFO] 127.0.0.1 - - [21/Nov/2023 00:14:39] "[35m[1mPOST /api/register-broker-record HTTP/1.1[0m" 500 -
+2023-11-21 00:16:26,390 [INFO]  * Detected change in '/home/amulya/BD_project/RR-Team-46-YAKt-Yet-Another-KRaft-/flask_http_server.py', reloading
+2023-11-21 00:18:03,794 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-11-21 00:18:03,794 [INFO] [33mPress CTRL+C to quit[0m
+2023-11-21 00:18:03,794 [INFO]  * Restarting with stat
+2023-11-21 00:18:03,983 [WARNING]  * Debugger is active!
+2023-11-21 00:18:03,984 [INFO]  * Debugger PIN: 415-895-803
+2023-11-21 00:18:06,199 [INFO] Starting ...
+2023-11-21 00:18:09,493 [INFO] Registering broker record
+2023-11-21 00:18:09,498 [INFO] Finding record by ID: 0
+2023-11-21 00:18:13,243 [INFO] 127.0.0.1 - - [21/Nov/2023 00:18:13] "GET / HTTP/1.1" 200 -
+2023-11-21 00:18:14,516 [INFO] 127.0.0.1 - - [21/Nov/2023 00:18:14] "POST /api/register-broker-record HTTP/1.1" 200 -
+2023-11-21 00:18:19,549 [INFO] Registering broker record
+2023-11-21 00:18:19,549 [INFO] Finding record by ID: 0
+2023-11-21 00:18:24,562 [INFO] 127.0.0.1 - - [21/Nov/2023 00:18:24] "POST /api/register-broker-record HTTP/1.1" 200 -
+2023-11-21 00:19:04,412 [INFO]  * Detected change in '/home/amulya/BD_project/RR-Team-46-YAKt-Yet-Another-KRaft-/flask_http_server.py', reloading
+2023-11-21 00:20:17,147 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-11-21 00:20:17,147 [INFO] [33mPress CTRL+C to quit[0m
+2023-11-21 00:20:17,148 [INFO]  * Restarting with stat
+2023-11-21 00:20:17,319 [WARNING]  * Debugger is active!
+2023-11-21 00:20:17,319 [INFO]  * Debugger PIN: 415-895-803
+2023-11-21 00:20:19,732 [INFO] Starting ...
+2023-11-21 00:20:26,789 [INFO] 127.0.0.1 - - [21/Nov/2023 00:20:26] "GET / HTTP/1.1" 200 -
+2023-11-21 00:20:30,972 [INFO] Registering broker record
+2023-11-21 00:20:30,977 [INFO] Finding record by ID: 0
+2023-11-21 00:20:35,993 [INFO] 127.0.0.1 - - [21/Nov/2023 00:20:35] "POST /api/register-broker-record HTTP/1.1" 200 -
+2023-11-21 00:20:42,178 [INFO] Creating topic record
+2023-11-21 00:20:42,179 [INFO] Finding record by ID: 0
+2023-11-21 00:20:47,185 [INFO] 127.0.0.1 - - [21/Nov/2023 00:20:47] "POST /api/topic-record HTTP/1.1" 200 -
+2023-11-21 00:20:54,922 [INFO] Creating partition record
+2023-11-21 00:20:54,923 [INFO] Changing status of the broker
+2023-11-21 00:20:54,924 [INFO] Finding record by ID: None
+2023-11-21 00:20:59,942 [INFO] 127.0.0.1 - - [21/Nov/2023 00:20:59] "POST /api/partition-record HTTP/1.1" 200 -
+2023-11-21 00:21:10,686 [INFO] Creating producer ID record
+2023-11-21 00:21:10,699 [INFO] Finding record by ID: None
+2023-11-21 00:21:15,708 [INFO] 127.0.0.1 - - [21/Nov/2023 00:21:15] "POST /api/producer-id-record HTTP/1.1" 200 -
+2023-11-21 00:22:00,623 [INFO] Broker management
+2023-11-21 00:22:00,638 [INFO] 127.0.0.1 - - [21/Nov/2023 00:22:00] "POST /api/broker-mgmt HTTP/1.1" 200 -
+2023-11-21 00:22:19,038 [INFO] Broker management
+2023-11-21 00:22:19,040 [INFO] 127.0.0.1 - - [21/Nov/2023 00:22:19] "POST /api/broker-mgmt HTTP/1.1" 200 -
+2023-11-21 00:23:52,135 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-11-21 00:23:52,135 [INFO] [33mPress CTRL+C to quit[0m
+2023-11-21 00:23:52,136 [INFO]  * Restarting with stat
+2023-11-21 00:23:52,299 [WARNING]  * Debugger is active!
+2023-11-21 00:23:52,300 [INFO]  * Debugger PIN: 415-895-803
+2023-11-21 00:23:57,727 [INFO] Broker management
+2023-11-21 00:23:57,727 [INFO] 127.0.0.1 - - [21/Nov/2023 00:23:57] "POST /api/broker-mgmt HTTP/1.1" 200 -
+2023-11-21 00:24:02,932 [INFO] Starting ...
+2023-11-21 00:24:05,912 [INFO] Getting all records of a specific node
+2023-11-21 00:24:05,933 [INFO] 127.0.0.1 - - [21/Nov/2023 00:24:05] "POST /api/get-records-from-nodes HTTP/1.1" 200 -
+2023-11-21 00:24:09,977 [INFO] 127.0.0.1 - - [21/Nov/2023 00:24:09] "GET / HTTP/1.1" 200 -
+2023-11-21 00:27:07,600 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2023-11-21 00:27:07,600 [INFO] [33mPress CTRL+C to quit[0m
+2023-11-21 00:27:07,601 [INFO]  * Restarting with stat
+2023-11-21 00:27:07,758 [WARNING]  * Debugger is active!
+2023-11-21 00:27:07,758 [INFO]  * Debugger PIN: 415-895-803
+2023-11-21 00:27:16,038 [INFO] Starting ...
+2023-11-21 00:27:20,370 [INFO] Registering broker record
+2023-11-21 00:27:20,374 [INFO] Finding record by ID: 0
+2023-11-21 00:27:23,082 [INFO] 127.0.0.1 - - [21/Nov/2023 00:27:23] "GET / HTTP/1.1" 200 -
+2023-11-21 00:27:25,399 [INFO] 127.0.0.1 - - [21/Nov/2023 00:27:25] "POST /api/register-broker-record HTTP/1.1" 200 -
+2023-11-21 00:27:28,533 [INFO] Creating topic record
+2023-11-21 00:27:28,534 [INFO] Finding record by ID: 0
+2023-11-21 00:27:33,544 [INFO] 127.0.0.1 - - [21/Nov/2023 00:27:33] "POST /api/topic-record HTTP/1.1" 200 -
+2023-11-21 00:27:35,885 [INFO] Creating partition record
+2023-11-21 00:27:35,886 [INFO] Changing status of the broker
+2023-11-21 00:27:35,889 [INFO] Finding record by ID: None
+2023-11-21 00:27:40,914 [INFO] 127.0.0.1 - - [21/Nov/2023 00:27:40] "POST /api/partition-record HTTP/1.1" 200 -
+2023-11-21 00:27:43,748 [INFO] Creating producer ID record
+2023-11-21 00:27:43,753 [INFO] Finding record by ID: None
+2023-11-21 00:27:48,774 [INFO] 127.0.0.1 - - [21/Nov/2023 00:27:48] "POST /api/producer-id-record HTTP/1.1" 200 -
+2023-11-21 00:28:25,276 [INFO] Broker management
+2023-11-21 00:28:25,281 [INFO] 127.0.0.1 - - [21/Nov/2023 00:28:25] "POST /api/broker-mgmt HTTP/1.1" 200 -
+2023-11-21 00:28:33,999 [INFO] Broker management
+2023-11-21 00:28:34,000 [INFO] 127.0.0.1 - - [21/Nov/2023 00:28:34] "POST /api/broker-mgmt HTTP/1.1" 200 -
