@@ -94,14 +94,6 @@ Provide step-by-step instructions on how to install your project.
 
 Show examples of how to use your project. Provide code snippets and highlight important features.
 
-## Contributors
-
-- [Amulya Marali](https://github.com/amulyamarali)
-- [Srimitravinda Ponnada](https://github.com/srimi24)
-- [Chandana S M](https://github.com/chandanamulagund)
-- [Deeksha K](https://github.com/DEE-KRISH)
-
-
 ## License
 
 
