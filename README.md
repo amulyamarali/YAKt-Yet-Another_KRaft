@@ -1,5 +1,8 @@
 # YAKt Yet Another KRaft (Kafka Raft)
 
+## KRaft Architecture
+![image](https://github.com/user-attachments/assets/525a8802-7eed-46fd-8433-14e463335b17)
+
 
 
 * KRaft is a event based, distributed metadata management system that was written to replace Zookeeper in the ecosystem of Kafka.
