@@ -1,0 +1,113 @@
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "yakt"
+version = "0.1.0"
+description = "Yet Another KRaft - Kafka Raft consensus implementation"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+    {name = "Amulya Marali", email = ""},
+    {name = "Chandana Mulagund", email = ""}
+]
+requires-python = ">=3.10"
+dependencies = [
+    "Flask==2.3.3",
+    "pyzmq==25.1.0",
+    "requests==2.31.0",
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "License :: OSI Approved :: MIT License",
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: System :: Distributed Computing",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest==7.4.0",
+    "pytest-cov==4.1.0",
+    "ruff==0.0.287",
+    "mypy==1.4.1",
+]
+
+[project.urls]
+Homepage = "https://github.com/chandanamulagund/YAKt-Yet-Another_KRaft"
+Repository = "https://github.com/chandanamulagund/YAKt-Yet-Another_KRaft.git"
+Issues = "https://github.com/chandanamulagund/YAKt-Yet-Another_KRaft/issues"
+
+[tool.setuptools.packages.find]
+where = ["."]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+select = [
+    "E",    # pycodestyle errors
+    "W",    # pycodestyle warnings
+    "F",    # pyflakes
+    "I",    # isort
+    "C",    # flake8-comprehensions
+    "B",    # flake8-bugbear
+    "UP",   # pyupgrade
+]
+ignore = [
+    "E501",  # line too long (ruff/black will handle this)
+    "E402",  # module level import not at top of file
+]
+exclude = [
+    ".venv",
+    "build",
+    "dist",
+    ".egg-info",
+]
+
+[tool.ruff.isort]
+known-first-party = ["raft", "server", "client"]
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false
+disallow_incomplete_defs = false
+check_untyped_defs = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+strict_optional = true
+
+[[tool.mypy.overrides]]
+module = "zmq.*"
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "--cov=raft --cov=server --cov-report=term-missing --cov-report=html"
+
+[tool.coverage.run]
+source = ["raft", "server"]
+omit = [
+    "*/tests/*",
+    "*/test_*.py",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+]
