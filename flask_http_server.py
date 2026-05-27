@@ -1,8 +1,9 @@
-from flask import Flask, request, jsonify
+import logging
 import time
-from raft import RaftNode
 
-import logging 
+from flask import Flask, jsonify, request
+
+from raft import RaftNode
 
 # Configure the logging module
 logging.basicConfig(filename='app.log', level=logging.DEBUG,
@@ -10,11 +11,11 @@ logging.basicConfig(filename='app.log', level=logging.DEBUG,
 
 
 app = Flask(__name__)
- 
-# Create the intercommunication json 
+
+# Create the intercommunication json
 ip_addr = "192.168.136.128"
-comm_dict = {"node0": {"ip": ip_addr, "port": "5567"}, 
-            "node1": {"ip": ip_addr, "port": "5566"}, 
+comm_dict = {"node0": {"ip": ip_addr, "port": "5567"},
+            "node1": {"ip": ip_addr, "port": "5566"},
             "node2": {"ip": ip_addr, "port": "5565"},
             "node3": {"ip": ip_addr, "port": "5564"},}
 
@@ -49,7 +50,7 @@ def find_record_by_id(record_type, record_id):
                 metadata_store[record_type]["records"][0]["epoch"] = new
                 # print("Epoch Recorded: ", metadata_store[record_type]["records"][0]["epoch"]) # DEBUG
                 return record
-            
+
     for record in metadata_store[record_type]["records"]:
         if record.get("internalUUID") == record_id and record.get("brokerStatus") != "CLOSED":
             new = record.get("epoch") + 1
@@ -57,8 +58,8 @@ def find_record_by_id(record_type, record_id):
             # print("Epoch Recorded: ", metadata_store[record_type]["records"][0]["epoch"]) # DEBUG
             return record
         if record.get("internalUUID") == record_id and record.get("brokerStatus") == "CLOSED":
-            return "NOPE" # meaning u r modifying closed broker which is not possible 
-        
+            return "NOPE" # meaning u r modifying closed broker which is not possible
+
     return None
 
 # to include new raftnodes into the cluster
@@ -87,7 +88,7 @@ def new_node():
 
     nodes[-1].client_request({'val': metadata_store})
     time.sleep(5)
-    
+
     for n in nodes:
         print("recent entry: ", n.check_committed_entry())
 
@@ -118,10 +119,10 @@ def remove_node():
             # print("comm_dict now", comm_dict) # DEBUG
             # print("removed node: ", name) # DEBUG
             # print("present nodes are: ", nodes) # DEBUG
-    
+
     nodes[0].client_request({'val': metadata_store})
     time.sleep(5)
-    
+
     for n in nodes:
         print("recent entry: ", n.check_committed_entry())
 
@@ -141,13 +142,13 @@ def register_broker_record():
 
     # Check if the broker record with the given ID already exists
     existing_record = find_record_by_id(record_type, record_id)
-    if existing_record != "NOPE" and existing_record != None:
+    if existing_record != "NOPE" and existing_record is not None:
         # Update the existing record
         existing_record.update(data)
         # Update the timestamp
         metadata_store[record_type]["timestamp"].append(get_timestamp())
-    
-    elif existing_record == None:
+
+    elif existing_record is None:
         # Add a new record
         metadata_store[record_type]["records"].append(data)
         # Update the timestamp
@@ -155,11 +156,11 @@ def register_broker_record():
     else:
         pass
 
-    latest_offset = metadata_store[record_type]["timestamp"][-1]
+    metadata_store[record_type]["timestamp"][-1]
 
     nodes[0].client_request({'val': metadata_store})
     time.sleep(5)
-    
+
     for n in nodes:
         print("recent entry: ", n.check_committed_entry())
 
@@ -186,11 +187,11 @@ def create_topic_record():
     metadata_store[record_type]["timestamp"].append(get_timestamp())
     print("Topic Recorded: ", metadata_store[record_type]["records"]) # DEBUG
 
-    latest_offset = metadata_store[record_type]["timestamp"][-1]
+    metadata_store[record_type]["timestamp"][-1]
 
     nodes[0].client_request({'val': metadata_store})
     time.sleep(5)
-    
+
     for n in nodes:
         print("recent entry: ", n.check_committed_entry())
 
@@ -231,11 +232,11 @@ def create_partition_record():
 
     # print("Partition Recorded: ", metadata_store[record_type]["records"]) # DEBUG
 
-    latest_offset = metadata_store[record_type]["timestamp"][-1]
+    metadata_store[record_type]["timestamp"][-1]
 
     nodes[0].client_request({'val': metadata_store})
     time.sleep(5)
-    
+
     for n in nodes:
         print("recent entry: ", n.check_committed_entry())
 
@@ -263,11 +264,11 @@ def create_producer_id_record():
 
     print("metadata_store: ", metadata_store )# DEBUG
 
-    latest_offset = metadata_store[record_type]["timestamp"][-1]
+    metadata_store[record_type]["timestamp"][-1]
 
     nodes[0].client_request({'val': metadata_store})
     time.sleep(5)
-    
+
     for n in nodes:
         print("recent entry: ", n.check_committed_entry())
 
@@ -292,19 +293,19 @@ def broker_mgmt():
             return jsonify(metadata_store)
         elif data-offset>0 and data-offset<=300:
             diff["diff_broker"].append(data-offset)
-    
+
     for data in metadata_store["TopicRecords"]["timestamp"]:
         if data-offset > 300:
             return jsonify(metadata_store)
         elif data-offset>0 and data-offset<=300:
             diff["diff_topic"].append(data-offset)
-    
+
     for data in metadata_store["PartitionRecords"]["timestamp"]:
         if data-offset > 300:
             return jsonify(metadata_store)
         elif data-offset>0 and data-offset<=300:
             diff["diff_partition"].append(data-offset)
-    
+
     return jsonify(diff)
 
 
@@ -318,7 +319,7 @@ def client_mgmt():
     diff = {"brokers": [],
             "topics": [],
             "partitions": []}
-    
+
     print("IDKKK", metadata_store["RegisterBrokerRecords"])
 
     for i in range(len(metadata_store["RegisterBrokerRecords"]['timestamp'])):
@@ -328,7 +329,7 @@ def client_mgmt():
         elif data-offset>0 and data-offset<=300:
             x = metadata_store["RegisterBrokerRecords"]["records"][i].get("brokerId")
             diff["brokers"].append(x)
-    
+
     for i in range(len(metadata_store["TopicRecords"]['timestamp'])):
         data = metadata_store["TopicRecords"]['timestamp'][i]
         if data-offset > 300:
@@ -336,7 +337,7 @@ def client_mgmt():
         elif data-offset>0 and data-offset<=300:
             x = metadata_store["TopicRecords"]["records"][i].get("topicUUID")
             diff["topics"].append(x)
-    
+
     for i in range(len(metadata_store["PartitionRecords"]['timestamp'])):
         data = metadata_store["PartitionRecords"]['timestamp'][i]
         if data-offset > 300:
@@ -344,7 +345,7 @@ def client_mgmt():
         elif data-offset>0 and data-offset<=300:
             x = metadata_store["PartitionRecords"]["records"][i].get("partitionId")
             diff["partitions"].append(x)
-    
+
     return jsonify(diff)
 
 
@@ -376,7 +377,7 @@ def node_records():
 def default_route():
     app.logger.info("Starting ...")
     global nodes
-    for name, address in comm_dict.items():
+    for name, _address in comm_dict.items():
         nodes.append(RaftNode(comm_dict, name))
         nodes[-1].start()  # last node meaning append nodes to the list start one by one
 
@@ -411,7 +412,7 @@ def default_route():
     # for val in range(2):
     #     nodes[0].client_request({'val': val})
     # time.sleep(5)
-    
+
     # latest commit entry of each node
     for n in nodes:
         print("recent entry: ", n.check_committed_entry())
@@ -419,7 +420,7 @@ def default_route():
 
     time.sleep(2)
 
-    
+
     # data = nodes[0]._load_config(comm_dict)
     # print("loaded data: ", data)
 

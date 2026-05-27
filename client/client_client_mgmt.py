@@ -1,5 +1,6 @@
-import requests
 import json
+
+import requests
 
 # Set the URL of your Flask server
 url = 'http://localhost:5000/api/client-mgmt'  # Replace with your actual endpoint
@@ -10,7 +11,7 @@ data = {
         "timestamp": 1700452358,
 }
 
- 
+
 # Set the headers to indicate that we're sending JSON
 headers = {'Content-Type': 'application/json'}
 

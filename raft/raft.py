@@ -1,22 +1,22 @@
 #!/usr/bin/env python
 
-from __future__ import print_function
-from __future__ import division
 
-from builtins import str
-from builtins import range
-from past.utils import old_div
-
-import time
 import json
 import random
 import threading
-from queue import Queue, Empty
+import time
+from queue import Empty, Queue
 
 from .interface import Listener, Talker
-from .protocol import MessageType, MessageDirection, RequestVotesResults, \
-    AppendEntriesResults, RequestVotesMessage, AppendEntriesMessage, \
-    parse_json_message
+from .protocol import (
+    AppendEntriesMessage,
+    AppendEntriesResults,
+    MessageDirection,
+    MessageType,
+    RequestVotesMessage,
+    RequestVotesResults,
+    parse_json_message,
+)
 
 # Adjust these to test
 address_book_fname = 'address_book.json'
@@ -26,8 +26,8 @@ start_port = 5557
 
 class RaftNode(threading.Thread):
     def __init__(self, config, name, role='follower', verbose=True):
-        threading.Thread.__init__(self) 
-        
+        threading.Thread.__init__(self)
+
         self._terminate = False
         self.daemon = True
 
@@ -49,36 +49,36 @@ class RaftNode(threading.Thread):
 
         # print("All ids are " + str(self.all_ids))  # DEBUG
         # print("My id is " + self.my_id ) # DEBUG
-    
+
 
 
         # Timing variables
         self.election_timeout = random.uniform(0.1, 0.1+0.05*len(self.all_ids)) # Failed vote backoff, used for pretty much all timing related things.
         # The election timeout is the amount of time a follower waits for a heartbeat from a leader before initiating its own election.
         self.heartbeat_frequency = 0.01                                     # How often to send heartbeat (should be less than the election timeout).
-        self.resend_time = 2.0                                              # How often to resend an append entries if you havent heard from a node in a while. 
+        self.resend_time = 2.0                                              # How often to resend an append entries if you havent heard from a node in a while.
 
         # State variables that I've added
         self._name = name                                                   # Your name. Used mostly for debugging.
         self.current_num_nodes = len(self.all_ids)                          # Number of nodes in the system.
         self.current_role = role                                            # Your role in the system (follower, candidate, leader, pending).
         self.leader_id = None                                               # Who you think the current leader is.
-        
+
         # Persistent state variables
         self.current_term = 1                                               # Your current election term.
-        self.voted_for = None                                               # Who have you voted in this term. None means you haven't voted for anyone. 
+        self.voted_for = None                                               # Who have you voted in this term. None means you haven't voted for anyone.
         self.log = [{'term': 1, 'entry': 'Init Entry', 'id': -1}]           # Your log. Log entries are a dict with the following fields: term, entry, id.
         self.log_hash = {}
-    
+
         # Volatile state variables
         self.commit_index = 0                                               # Index of the highest known committed entry in the system. (replicated amongst the nodes)
         self.last_applied_index = 0                                         # Index of the highest entry you have committed. Note that functionally this is the same as commit_index.
         self.last_applied_term = 1                                          # Term of the highest entry you have committed.
 
-        # Volotile state leader variables 
+        # Volotile state leader variables
         self.next_index = [None for _ in range(self.current_num_nodes)]     # Index to send to each node next. None means up to date
         self.match_index = [0 for _ in range(self.current_num_nodes)]       # Index of highest committed entry on each node
-        self.heard_from = [0 for _ in range(self.current_num_nodes)]        # Time last heard from each node. 
+        self.heard_from = [0 for _ in range(self.current_num_nodes)]        # Time last heard from each node.
 
         # Start both ends of your interface
         identity = {'my_id': self.my_id, 'my_name': name}
@@ -91,26 +91,24 @@ class RaftNode(threading.Thread):
         self.talker.stop()
         self.listener.stop()
         self._terminate = True
-        self.all_ids.remove(self.my_id)
-        print("new all ids: ", self.all_ids)
 
     @property
     def name(self):
         ''' Return the name of the node. '''
         return self._name
-        
+
     def client_request(self, value, id_num=-1):
         '''
             client_request: Public function to enqueue a value. If the node
-                is not the leader, this request will be forewarded to the 
+                is not the leader, this request will be forewarded to the
                 leader before being appended. If the system is in a transition
-                state, the request may not be appended at all, so this should 
+                state, the request may not be appended at all, so this should
                 be retried. If no id_num is specified, the id is set to -1.
             Inputs:
                 value: any singleton data type.
                 id_num: any immutable object.
         '''
-        # print("from client_request(): ", value)  # DEBUG
+        print("from client_request(): ", value)  # DEBUG
         entry = {
             'term': self.current_term,  # initially 1
             'entry': value,
@@ -121,12 +119,12 @@ class RaftNode(threading.Thread):
         print("printing client queue: ", self.client_queue)  # DEBUG
 
     def check_committed_entry(self, id_num=None):
-        ''' 
-            check_committed_entry: Public function to check the last entry 
-                committed. Optionally specify an id_num to search for. If 
-                specified, will return the most recent entry with this id_num. 
+        '''
+            check_committed_entry: Public function to check the last entry
+                committed. Optionally specify an id_num to search for. If
+                specified, will return the most recent entry with this id_num.
             Inputs:
-                id_num: returns the most recent entry with this id_num. 
+                id_num: returns the most recent entry with this id_num.
         '''
         if (id_num is None):
             # print("inside commit none")  # DEBUG
@@ -137,7 +135,7 @@ class RaftNode(threading.Thread):
             return self.log_hash.get(id_num, None)
 
     def check_role(self):
-        ''' 
+        '''
             check_role: Public function to check the role of a given node.
         '''
         with self.client_lock:
@@ -145,16 +143,16 @@ class RaftNode(threading.Thread):
 
     def pause(self):
         '''
-            pause: Allows the user to pause a node. In this state nodes are 
-                "removed" from the system until un_pause is called. 
+            pause: Allows the user to pause a node. In this state nodes are
+                "removed" from the system until un_pause is called.
         '''
         self._set_current_role('none')
         if (self.verbose):
             print(self._name + ': pausing...')
-        
+
     def un_pause(self):
         '''
-            un_pause: Allows the user to unpause a node. If the node was not 
+            un_pause: Allows the user to unpause a node. If the node was not
                 already paused, does nothing.
         '''
         if (self.check_role() == 'none'):
@@ -168,12 +166,12 @@ class RaftNode(threading.Thread):
     def run(self):
         # print("IM RUNNINGGGGG") # DEBUG
         '''
-            run: Called when the node starts. Facilitates state transitions. 
+            run: Called when the node starts. Facilitates state transitions.
         '''
         # Wait for the interface to be ready
         time.sleep(self.listener.initial_backoff)
 
-        # Your role determines your action. Every time a state chance occurs, this loop will facilitate a transition to the next state. 
+        # Your role determines your action. Every time a state chance occurs, this loop will facilitate a transition to the next state.
         try:
             while not self._terminate:
                 if self.check_role() == 'leader':
@@ -188,15 +186,15 @@ class RaftNode(threading.Thread):
             self.stop()
 
     def _follower(self):
-        ''' 
-            _follower: Nodes will start here if they have been newly added to 
+        '''
+            _follower: Nodes will start here if they have been newly added to
                 the network. The responsibilities of the follower nodes are:
-                    - Respond to election requests with a vote if the candidate 
-                        is more up-to-date than they are. 
-                    - Replicate entries sent by the leader. 
-                    - Commit entries committed by the leader. 
-                    - Promote self to candidate if the leader has crashed. 
-        ''' 
+                    - Respond to election requests with a vote if the candidate
+                        is more up-to-date than they are.
+                    - Replicate entries sent by the leader.
+                    - Commit entries committed by the leader.
+                    - Promote self to candidate if the leader has crashed.
+        '''
 
         # This will be when you've seen the most recent heartbeat
         most_recent_heartbeat = time.time()
@@ -217,11 +215,11 @@ class RaftNode(threading.Thread):
                         # If this election is for a new term, update your term
                         if (incoming_message.term > self.current_term):
                             self._increment_term(incoming_message.term)
-                            
+
                         # If you haven't already voted and you're less up to date than the candidate, send your vote
                         if ((self.voted_for is None) and (incoming_message.last_log_index >= self.last_applied_index) and (incoming_message.last_log_term >= self.last_applied_term)):
                             self._send_vote(incoming_message.sender)
-                        else: 
+                        else:
                             self._send_vote(incoming_message.sender, False)
 
                         # If there's currently a candidate running, then you shouldn't promote yourself
@@ -232,6 +230,7 @@ class RaftNode(threading.Thread):
                         if (incoming_message.term > self.current_term):
                             self._increment_term(incoming_message.term)
                         self.leader_id = incoming_message.leader_id
+                        print(f"{self._name}: The current leader is {self.leader_id}.")
                         most_recent_heartbeat = time.time()
 
                         # If leader has been resolved, check for any client requests
@@ -239,10 +238,10 @@ class RaftNode(threading.Thread):
                             client_request = self._get_client_request()
                             if (client_request is not None):
                                 self._send_client_request(incoming_message.leader_id, client_request)
-                        
+
                     # Incoming message is some data to append
                     elif (incoming_message.type == MessageType.AppendEntries):
-                        
+
                         # Reply false if message term is less than current_term, this is an invalid entry
                         if (incoming_message.term < self.current_term):
                             self._send_acknowledge(incoming_message.leader_id, False)
@@ -258,7 +257,7 @@ class RaftNode(threading.Thread):
                             else:
                                 self._append_entry(incoming_message.entries, commit=False, prev_index=incoming_message.prev_log_index)
                             self._send_acknowledge(incoming_message.leader_id, True)
-                    
+
                     # Incoming message is a commit message
                     elif (incoming_message.type == MessageType.Committal):
                         self._commit_entry(incoming_message.prev_log_index, incoming_message.prev_log_term)
@@ -271,21 +270,21 @@ class RaftNode(threading.Thread):
         return
 
     def _candidate(self):
-        ''' 
-            _candidate: Nodes will start here if they have not heard the leader 
-                for a period of time. The responsibilities of the candidate 
+        '''
+            _candidate: Nodes will start here if they have not heard the leader
+                for a period of time. The responsibilities of the candidate
                 nodes are:
-                    - Call for a new election and await the results: 
-                    - If you recieve more than half of the votes in the system, 
-                        promote yourself. 
-                    - If you see someone else starting an election for a term 
-                        higher than your own, vote for them, update yourself, 
-                        and then demote yourself. 
-                    - If you see a heartbeat for a term higher than or equal to 
-                        your own, update yourself, and then demote yourself. 
-                    - If you have not won after the election timeout, restart 
-                        the election. 
-        ''' 
+                    - Call for a new election and await the results:
+                    - If you recieve more than half of the votes in the system,
+                        promote yourself.
+                    - If you see someone else starting an election for a term
+                        higher than your own, vote for them, update yourself,
+                        and then demote yourself.
+                    - If you see a heartbeat for a term higher than or equal to
+                        your own, update yourself, and then demote yourself.
+                    - If you have not won after the election timeout, restart
+                        the election.
+        '''
 
         if(self.verbose):
             print(self._name + ': became candidate')
@@ -298,7 +297,7 @@ class RaftNode(threading.Thread):
 
         # Vote for yorself
         self._send_vote(self.my_id, True)
-        
+
         # Keep track of votes for and against you
         votes_for_me = 0
         total_votes = 0
@@ -312,18 +311,19 @@ class RaftNode(threading.Thread):
 
                 # Handle responses to your election
                 if (incoming_message.direction == MessageDirection.Response):
-                
+
                     # If it is a vote, then tally for or against you
                     if (incoming_message.type == MessageType.RequestVotes):
                         if (incoming_message.results.vote_granted):
                             votes_for_me += 1
+                            print(f"{self._name}: Received vote, total votes for me: {votes_for_me}.")
                         total_votes += 1
 
                         #print(self._name + ": votes for me " + str(votes_for_me))
                         #print(self._name + ": total votes " + str(total_votes))
-                            
+
                         # If you have a majority, promote yourself
-                        if ((votes_for_me > int(old_div(self.current_num_nodes, 2))) or (self.current_num_nodes == 1)):
+                        if ((votes_for_me > self.current_num_nodes // 2) or (self.current_num_nodes == 1)):
                             self._set_current_role('leader')
                             return
 
@@ -345,36 +345,36 @@ class RaftNode(threading.Thread):
                             self.leader_id = incoming_message.leader_id
                             self._set_current_role('follower')
                             return
-            
+
             # If this election has been going for a while we're probably deadlocked, restart the election
             if ((time.time() - time_election_going) > self.election_timeout):
                 if(self.verbose):
                     print(self._name + ': election timed out')
                 self._set_current_role('candidate')
                 return
-        
+
         return
 
     def _leader(self):
-        ''' 
-            _leader: Nodes will start here if they have won an election and 
-                promoted themselves. The responsibilities of the leader nodes 
+        '''
+            _leader: Nodes will start here if they have won an election and
+                promoted themselves. The responsibilities of the leader nodes
                 are:
-                    - Send a periodic heartbeat. 
-                    - Keep track of who is active in the system and their 
-                        status. This is done using self.next_index and 
+                    - Send a periodic heartbeat.
+                    - Keep track of who is active in the system and their
+                        status. This is done using self.next_index and
                         self.match_index.
-                    - Accept client requests and replicate them on the system. 
-                        When a new request is made, send an append entries to 
-                        all up-to-date nodes and away a response. When  more 
-                        than half of the nodes respond, commit that entry. 
-                    - Catch up nodes that are behind by resending append 
-                        entries after a short amount of time. 
-                    - If there's a vote going on with a term term higher than 
-                        your own, vote for them, update yourself, and then 
-                        demote yourself. 
-        ''' 
-        
+                    - Accept client requests and replicate them on the system.
+                        When a new request is made, send an append entries to
+                        all up-to-date nodes and away a response. When  more
+                        than half of the nodes respond, commit that entry.
+                    - Catch up nodes that are behind by resending append
+                        entries after a short amount of time.
+                    - If there's a vote going on with a term term higher than
+                        your own, vote for them, update yourself, and then
+                        demote yourself.
+        '''
+
         if(self.verbose):
             print(self._name + ': became leader')
 
@@ -386,6 +386,7 @@ class RaftNode(threading.Thread):
 
         # You're the current leader
         self.leader_id = self.my_id
+        print(f"{self._name}: I am the leader now. My ID: {self.leader_id}.")
 
         # Assume all other nodes are up to date with your log
         self.match_index = [self.commit_index for _ in range(self.current_num_nodes)]
@@ -422,7 +423,7 @@ class RaftNode(threading.Thread):
             incoming_message = self._get_message()
             if (incoming_message is not None):
 
-                # Handle incoming responses 
+                # Handle incoming responses
                 if (incoming_message.direction == MessageDirection.Response):
 
                     # Incoming message is an ack, update next_index and see if there's more log to send
@@ -430,7 +431,7 @@ class RaftNode(threading.Thread):
                         sender_index = self._get_node_index(incoming_message.sender)
                         self.heard_from[sender_index] = time.time()
 
-                        # If you haven't already gotten a positive ack for this operation 
+                        # If you haven't already gotten a positive ack for this operation
                         if (self.next_index[sender_index] is not None):
 
                             # If the append entries was successful, then increment next index to send, otherwise decrement
@@ -447,7 +448,7 @@ class RaftNode(threading.Thread):
                             else:
                                 next_index = self.next_index[sender_index]
                                 self._send_append_entries(next_index - 1, self.log[next_index - 1]['term'], self.log[next_index], incoming_message.sender)
-                            
+
                             if (self.verbose):
                                 print(self._name + ": updated standing is " + str(self.match_index) + " my index: " + str(self._log_max_index()))
 
@@ -458,7 +459,7 @@ class RaftNode(threading.Thread):
                             for index in log_lengths:
                                 # Count how many other nodes this index is replicated on
                                 replicated_on = sum([1 if index <= i else 0 for i in log_lengths])
-                                if (replicated_on >= (int(old_div(self.current_num_nodes, 2)) + 1)):
+                                if (replicated_on >= (self.current_num_nodes // 2 + 1)):
                                     max_committable_index = index
 
                             # If there's a new committable index, then send the commit
@@ -483,7 +484,7 @@ class RaftNode(threading.Thread):
                             if(self.verbose):
                                 print(self._name + ': saw higher term, demoting')
                             return
-            
+
             # Get any pending client requests
             client_request = self._get_client_request()
             if (client_request is not None):
@@ -501,30 +502,30 @@ class RaftNode(threading.Thread):
 
     def _get_message(self):
         '''
-            _get_message: A wrapper to get a message. If there are no pending 
-                messages returns None. 
+            _get_message: A wrapper to get a message. If there are no pending
+                messages returns None.
         '''
         return parse_json_message(self.listener.get_message())
 
-    def _load_config(self, config):
-        with open(config, 'r') as infile:
+    def _load_config(self, config, name):
+        with open(config) as infile:
             data = json.load(infile)
         return data
 
     def _get_client_request(self):
         '''
-            _get_node_index: Pops the most recent client request. 
+            _get_node_index: Pops the most recent client request.
         '''
         try:
             return self.client_queue.get(block=False)
         except Empty:
             return None
-    
+
     def _set_current_role(self, role):
         '''
-            _set_current_role: Set the node role. Options are ['follower', 
+            _set_current_role: Set the node role. Options are ['follower',
             'leader', 'candidate']
-            Inputs: 
+            Inputs:
                 role: (str)
                     Node's new role
         '''
@@ -537,7 +538,7 @@ class RaftNode(threading.Thread):
                 e.g. for
                     self.all_ids = ['5556', '5558']
                     _get_node_index('5556') <- returns 0
-            Inputs: 
+            Inputs:
                 node_address: (str)
                     The query address
         '''
@@ -545,18 +546,18 @@ class RaftNode(threading.Thread):
 
     def _log_max_index(self):
         '''
-            _log_max_index: Returns the max index of the log. Used for 
-                convenience. 
+            _log_max_index: Returns the max index of the log. Used for
+                convenience.
         '''
         return len(self.log) - 1
 
     def _increment_term(self, term=None):
         '''
-            _increment_term: Should be called whenever changing terms. 
+            _increment_term: Should be called whenever changing terms.
                 Does the following: clears the voted for status, increments
                 the term. Useful for ensuring that both of these are done
                 whenever the term is changed
-            Input: 
+            Input:
                 term: (int or None)
                     If term is none, will increment by one. Else will change
                     the term to whatever was input.
@@ -570,18 +571,18 @@ class RaftNode(threading.Thread):
     # BELOW TWO FUNCTIONS WORK ON CHECKPOINT CREATION OF LOGS
     def _verify_entry(self, prev_index, prev_term):
         '''
-            _verify_entry: Should be called whenever checking if an entry can 
+            _verify_entry: Should be called whenever checking if an entry can
                 be appended to the log. Checks that the log has enough entries
                 that the target index will not cause an error. Then checks if
-                the target index has the same term as the target term. If it 
-                does then this is a valid entry. 
-            Input: 
+                the target index has the same term as the target term. If it
+                does then this is a valid entry.
+            Input:
                 prev_index: (int)
                     Index to check.
                 prev_term: (int)
                     Term to check.
         '''
-        
+
         if (len(self.log) <= prev_index):
             return False
         if (self.log[prev_index]['term'] == prev_term):
@@ -590,27 +591,27 @@ class RaftNode(threading.Thread):
 
     def _append_entry(self, entry, commit=False, prev_index=None):
         '''
-            _append_entry: Appends entries to the log and optionally commits. 
-                Assumes that the entry has already been verified (see 
+            _append_entry: Appends entries to the log and optionally commits.
+                Assumes that the entry has already been verified (see
                 _verify_entry).
             Inputs:
-                entry: (dict with the attributes 'term' and 'entry') 
-                    Stores  whatever information to append to the log. 
-                commit: (bool) 
+                entry: (dict with the attributes 'term' and 'entry')
+                    Stores  whatever information to append to the log.
+                commit: (bool)
                     If True, will update the last applied index and term after
-                    writing to the log. If false will do nothing. 
-                prev_index: (int) 
-                    If None, will append the entry to the end of the log. Else 
+                    writing to the log. If false will do nothing.
+                prev_index: (int)
+                    If None, will append the entry to the end of the log. Else
                     will append the entry to the index specified.
         '''
 
-    
+
         # If prev_term was specified, might have to cut the log short
         if (prev_index is None):
             prev_index = len(self.log) - 1
         else:
             self.log = self.log[:prev_index+1]
-        
+
         # Add this to the log
         prev_term = self.log[-1]['term']
         with self.client_lock:
@@ -625,13 +626,13 @@ class RaftNode(threading.Thread):
 
     def _commit_entry(self, index, term):
         '''
-            _commit_entry: Update internal varables to reflect a commit at the 
-                given index and term. Specifically the below variables should 
-                be updated whenever a commmit is made. 
+            _commit_entry: Update internal varables to reflect a commit at the
+                given index and term. Specifically the below variables should
+                be updated whenever a commmit is made.
             Inputs:
-                index: (int) 
+                index: (int)
                     Index to commit.
-                term: (int) 
+                term: (int)
                     Term corresponding to this commit.
         '''
         self.last_applied_index = index
@@ -643,19 +644,19 @@ class RaftNode(threading.Thread):
 
     def _broadcast_append_entries(self, entry):
         '''
-            _broadcast_append_entries: Should be called only by the leader. 
-                Sends an append entries message to all nodes for the given 
+            _broadcast_append_entries: Should be called only by the leader.
+                Sends an append entries message to all nodes for the given
                 entry.
             Inputs:
-                entry: (dict with the attributes 'term' and 'entry') 
-                    Entry to append to all nodes.    
+                entry: (dict with the attributes 'term' and 'entry')
+                    Entry to append to all nodes.
         '''
-        # Append the new entry 
+        # Append the new entry
         prev_index, prev_term = self._append_entry(entry, commit=False)
 
         # Send out other append entries
         for node, index in enumerate(self.next_index):
-            # Only send out append entries to nodes that are up-to-date. Also they will now be out of date so update next. 
+            # Only send out append entries to nodes that are up-to-date. Also they will now be out of date so update next.
             if (index is None):
                 self._send_append_entries(prev_index, prev_term, entry, self.all_ids[node])
                 self.next_index[node] = self._log_max_index()
@@ -666,11 +667,11 @@ class RaftNode(threading.Thread):
 
     def _broadcast_commmit_entries(self, index):
         '''
-            _broadcast_commmit_entries: Should be called only by the leader. 
+            _broadcast_commmit_entries: Should be called only by the leader.
                 Sends a commit message to all nodes for the given index.
             Inputs:
-                index: (int) 
-                    Index to commit.          
+                index: (int)
+                    Index to commit.
         '''
         # Commit yourself
         self._commit_entry(index, self.log[index]['term'])
@@ -682,12 +683,12 @@ class RaftNode(threading.Thread):
 
     def _send_request_vote(self, receiver=None):
         message = RequestVotesMessage(
-            type_ =   MessageType.RequestVotes, 
-            term =   self.current_term, 
+            type_ =   MessageType.RequestVotes,
+            term =   self.current_term,
             sender = self.my_id,
-            receiver = receiver, 
-            direction = MessageDirection.Request, 
-            candidate_id = self.my_id, 
+            receiver = receiver,
+            direction = MessageDirection.Request,
+            candidate_id = self.my_id,
             last_log_index = self.last_applied_index,
             last_log_term = self.last_applied_term
         )
@@ -695,12 +696,12 @@ class RaftNode(threading.Thread):
 
     def _send_vote(self, candidate, vote_granted=True):
         message = RequestVotesMessage(
-            type_ =   MessageType.RequestVotes, 
+            type_ =   MessageType.RequestVotes,
             term =   self.current_term,
             sender = self.my_id,
-            receiver = candidate, 
-            direction = MessageDirection.Response, 
-            candidate_id = candidate, 
+            receiver = candidate,
+            direction = MessageDirection.Response,
+            candidate_id = candidate,
             last_log_index = self.last_applied_index,
             last_log_term = self.last_applied_term,
             results = RequestVotesResults(
@@ -740,7 +741,7 @@ class RaftNode(threading.Thread):
             leader_commit = self.commit_index
         )
         self._send_message(message)
-    
+
     def _send_committal(self, index, receiver=None):
         message = AppendEntriesMessage(
             type_ = MessageType.Committal,
@@ -767,11 +768,11 @@ class RaftNode(threading.Thread):
             prev_log_index = self.last_applied_index,
             prev_log_term = self.last_applied_term,
             entries = entry,
-            leader_commit = self.commit_index, 
+            leader_commit = self.commit_index,
             results = AppendEntriesResults(
                 term = self.current_term,
                 success = success
-            ) 
+            )
         )
         self._send_message(message)
 
@@ -792,8 +793,8 @@ class RaftNode(threading.Thread):
 
 def test_failures():
     '''
-        test_failures: Creates a bunch of nodes and then crashes half of them. 
-            A leader should emerge after the crash. 
+        test_failures: Creates a bunch of nodes and then crashes half of them.
+            A leader should emerge after the crash.
     '''
     # Create the address book with x number of nodes
     d = {'leader':{'ip': local_ip,
@@ -802,12 +803,12 @@ def test_failures():
     node_num = 1
     for p in range(start_port, start_port+total_nodes):
         name = 'node' + str(node_num)
-        d[str(name)] = { 
+        d[str(name)] = {
             'ip': local_ip,
             'port': str(p)
         }
         node_num = node_num + 1
-        
+
     with open(address_book_fname, 'w') as outfile:
         json.dump(d, outfile)
 
@@ -830,7 +831,7 @@ def test_failures():
     # Pause about half of them, including the leader
     l = [n for n in s if (n.check_role() == 'leader')][0]
     l.pause()
-    num_to_kill = int(old_div(total_nodes, 2)) - 1
+    num_to_kill = total_nodes // 2 - 1
     for n in s:
         num_to_kill = num_to_kill - 1
         if num_to_kill == 0:
@@ -846,7 +847,7 @@ def test_failures():
 
     # Need to do this before closing
     for n in s:
-        n.stop() 
+        n.stop()
 
 if __name__ == '__main__':
     print("IM RUNNING test_failures()") # DEBUG

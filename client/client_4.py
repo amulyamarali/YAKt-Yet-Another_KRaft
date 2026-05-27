@@ -1,5 +1,6 @@
-import requests
 import json
+
+import requests
 
 # Set the URL of your Flask server
 url = 'http://localhost:5000/api/producer-id-record'  # Replace with your actual endpoint
@@ -7,11 +8,11 @@ url = 'http://localhost:5000/api/producer-id-record'  # Replace with your actual
 # Data to be sent in JSON format
 data = {
         "brokerId": 0, # id of requesting broker
-		"epoch": 0, 
-		"producerId": 0 # id of requested broker
+        "epoch": 0,
+        "producerId": 0 # id of requested broker
 }
 
- 
+
 # Set the headers to indicate that we're sending JSON
 headers = {'Content-Type': 'application/json'}
 
