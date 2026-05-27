@@ -1,0 +1,6 @@
+# YAKt (Yet Another KRaft) - Production Dependencies
+# Python 3.10+
+
+Flask==2.3.3
+pyzmq==25.1.0
+requests==2.31.0
